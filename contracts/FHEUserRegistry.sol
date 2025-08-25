@@ -9,6 +9,8 @@ contract FHEUserRegistry is SepoliaConfig {
 
     mapping(address => euint256) users;
 
+    event UserRegistered(address indexed userAddr);
+
     /// @notice Return a number containing data about connected services and social media to a given address
     function getUserSocialMediaIndicator(address inputAddr) external view returns (euint256) {
         return users[inputAddr];
@@ -23,5 +25,7 @@ contract FHEUserRegistry is SepoliaConfig {
         FHE.allow(encryptedInputValue, inputAddr);
 
         users[inputAddr] = encryptedInputValue;
+
+        emit UserRegistered(inputAddr);
     }
 }
